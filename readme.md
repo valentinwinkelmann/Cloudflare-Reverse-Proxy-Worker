@@ -7,19 +7,33 @@ Originally, this Cloudflare reverse proxy was developed for customising third-pa
 In addition, it was important during development that it will be possible to overwrite specific routes and thus define new routes.
 
 ## 📦 Installation
-It is recommended to use Cloudflare Wrangler to deploy the worker. The Git repository can then be cloned and the `wrangler.toml` file customised. The `wrangler.toml` file contains the configuration for the reverse proxy. The settings for the worker can be customised here. The `wrangler.toml` file should look like this:
+It is recommended to use Cloudflare Wrangler to deploy the worker. To do this, simply clone the Git repository and then adapt the `wrangler.toml` file and the `index.js` file to your own requirements. A real domain can then be assigned to the worker in the Cloudflare settings (Workers & Pages).
 
+```bash
+git clone https://github.com/valentinwinkelmann/Cloudflare-Reverse-Proxy-Worker.git [your-name]
+cd [your-name]
+npm install
+```
+>Now adapt the `wrangler.toml` file and also the `index.js` file to your needs.
 ```toml
-name = "reverse-proxy"
+# wrangler.toml
+name = "reverse-proxy" # name of the worker
 main = "src/index.js"
 compatibility_date = "2023-11-10"
 [limits]
 cpu_ms = 5
 
 [vars]
-REVERSE_PROXY_SOURCE = "https://zielseite.de"
-REVERSE_PROXY_TARGET = "https://neueseite.de"
+REVERSE_PROXY_SOURCE = "https://targetpage.com" # the URL of the target page
+REVERSE_PROXY_TARGET = "https://newpage.com" # the URL of the new page
 ```
+
+```bash
+wrangler login # if not yet logged in
+npm start # for testing
+npm deploy # to deploy
+```
+That's all, your reverse proxy is now ready to use. You can deploy future changes at any time with `npm deploy`. 🎉
 
 
 # 📚 Documentation
@@ -46,7 +60,7 @@ The configuration object can contain various properties to adjust the behaviour 
 
 - `clientsideUrlRewrite`: A Boolean value that specifies whether the URL should be rewritten on the client side or not.
 
-### 🔭be Application example
+### 🔭 Application example
 
 ```javascript
 router.all('*', (request, env) => {

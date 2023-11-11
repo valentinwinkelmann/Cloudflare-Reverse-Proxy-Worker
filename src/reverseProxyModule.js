@@ -1,5 +1,3 @@
-// reverseProxyModule.js
-
 export async function handleProxyRequest(request, targetUrl, config = {}) {
     const { 
         trustedStyleSrc = [], 
@@ -13,10 +11,8 @@ export async function handleProxyRequest(request, targetUrl, config = {}) {
     const proxyRequest = new Request(targetUrl, request);
     let originalResponse = await fetch(proxyRequest);
 
-    // Erstelle eine Kopie der Headers, um sie zu modifizieren
     let headers = new Headers(originalResponse.headers);
 
-    // Modifiziere den CSP-Header, falls erforderlich
     let csp = headers.get('Content-Security-Policy');
     if (csp) {
         if (trustedStyleSrc.length > 0) {
@@ -35,10 +31,7 @@ export async function handleProxyRequest(request, targetUrl, config = {}) {
         headers.set("Content-Security-Policy", csp);
     }
 
-    // Erstelle einen HTMLRewriter
     let rewriter = new HTMLRewriter();
-
-    // Füge Skripte und Styles hinzu
     scriptSrc.forEach(({ src, target }) => {
         const scriptTag = `<script src="${src}"></script>`;
         rewriter.on(target, {
@@ -57,13 +50,11 @@ export async function handleProxyRequest(request, targetUrl, config = {}) {
         });
     });
 
-    // Führe HTML-Injektionen durch
     htmlInjection.forEach(({ selector, position, content, routes = [], excludeStatusCode = [], includeStatusCode = [] }) => {
         const url = new URL(request.url);
         const currentPath = url.pathname;
-        const responseStatusCode = originalResponse.status; // Statuscode der Antwort
+        const responseStatusCode = originalResponse.status;
     
-        // Prüfe, ob die aktuelle Route und der Statuscode die Injektion erlauben
         const matchesRoute = routes.length === 0 || routes.some(routePattern => matchPattern(currentPath, routePattern));
         const matchesExcludeStatus = !excludeStatusCode.includes(responseStatusCode);
         const matchesIncludeStatus = includeStatusCode.length === 0 || includeStatusCode.includes(responseStatusCode);
@@ -85,10 +76,8 @@ export async function handleProxyRequest(request, targetUrl, config = {}) {
         }
     });
 
-    // Wende den HTMLRewriter auf die Antwort an
     let transformedResponse = rewriter.transform(originalResponse);
 
-    // Erstelle eine neue Response mit den geänderten Headers
     return new Response(transformedResponse.body, {
         status: originalResponse.status,
         statusText: originalResponse.statusText,
@@ -110,7 +99,7 @@ function matchPattern(path, pattern) {
     });
 }
 
-
+// Helper function - modify this to your needs or remove it if you don't need it
 export function getClientSideUrlRewriteScript(valuePairs = []) {
     const rewriteCases = valuePairs.map(pair => {
         return `if (link.href.startsWith('${pair.from}')) {

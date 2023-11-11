@@ -7,19 +7,34 @@ Ursprünglich wurde dieser Cloudflare Reverse Proxy für das anpassen von Fremd 
 Zusätlich wurde bei der Entwicklung darauf wert gelegt, das es möglich sein wird gezielt routen zu überschreiben und so neue routen zu definieren.
 
 ## 📦 Installation
-Es ist zu empfehlen den Cloudflare Wrangler zu verwenden, um den Worker bereitzustellen. Anschließend kann die Git-Repositorie geklont werden und die `wrangler.toml` Datei angepasst werden. Die `wrangler.toml` Datei enthält die Konfiguration für den Reverse Proxy. Hier können die Einstellungen für den Worker angepasst werden. Die `wrangler.toml` Datei sollte wie folgt aussehen:
+Es ist zu empfehlen den Cloudflare Wrangler zu verwenden, um den Worker bereitzustellen. Hierzu kann einfach die Git-Repositorie geklont werden und anschließend die `wrangler.toml` Datei und auch die `index.js` Datei an die eigenen Bedürfnisse angepasst werden. Eine reale Domain kann dann anschließend in den Cloudflare Einstellungen (Workers & Pages) dem Worker zugewiesen werden.
 
+```bash
+git clone https://github.com/valentinwinkelmann/Cloudflare-Reverse-Proxy-Worker.git [your-name]
+cd [your-name]
+npm install
+```
+>passe nun die `wrangler.toml` Datei und auch die `index.js` Datei an deine Bedürfnisse an.
 ```toml
-name = "reverse-proxy"
+# wrangler.toml
+name = "reverse-proxy" # name des workers
 main = "src/index.js"
 compatibility_date = "2023-11-10"
 [limits]
 cpu_ms = 5
 
 [vars]
-REVERSE_PROXY_SOURCE = "https://zielseite.de"
-REVERSE_PROXY_TARGET = "https://neueseite.de"
+REVERSE_PROXY_SOURCE = "https://zielseite.de" # die URL der Zielseite
+REVERSE_PROXY_TARGET = "https://neueseite.de" # die URL der neuen Seite
 ```
+
+```bash
+wrangler login # falls noch nicht eingeloggt
+npm start # zum testen
+npm deploy # zum bereitstellen
+```
+Das ist alles, dein Reverse Proxy ist nun einsatzbereit. Zukünftige änderungen kannst du jederzeit mit `npm deploy` bereitstellen. 🎉
+
 
 
 # 📚 Dokumentation
