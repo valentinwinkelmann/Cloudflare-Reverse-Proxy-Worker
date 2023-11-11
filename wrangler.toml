@@ -1,0 +1,10 @@
+name = "reverse-proxy"
+main = "src/index.js"
+compatibility_date = "2023-11-10"
+
+[limits]
+cpu_ms = 5
+
+[vars]
+REVERSE_PROXY_SOURCE = "https://username.example.com"
+REVERSE_PROXY_TARGET = "https://ourdomain.com"
