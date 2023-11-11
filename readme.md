@@ -124,7 +124,7 @@ username.example.com <-[CNAME]-> temp.ourdomain.com <-[reverse proxy]-> ourdomai
 
 # 📜 Licence
 This project has been developed by [@VWGameDev](https://vwgame.dev) and is published under the [MIT licence](license.md).
-### Verwendete Bibliotheken
+### Used Libraries
 - [Itty Router](https://github.com/kwhitley/itty-router) : Copyright (c) 2020 Kevin R. Whitley
 ---
 # ⚠️ Disclaimer
