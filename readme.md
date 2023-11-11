@@ -54,7 +54,7 @@ The configuration object can contain various properties to adjust the behaviour 
 
 - `scriptSrc`: An array of objects containing information about scripts to be inserted into the page. Each object should contain the properties `src` (the URL of the script) and `target` (the location where the script should be inserted).
 
-- `styleSrc`: An array of objects containing information about stylesheets to be inserted into the page. Each object should contain the properties `rc` (the URL of the stylesheet) and `target` (the location where the stylesheet should be inserted).
+- `styleSrc`: An array of objects containing information about stylesheets to be inserted into the page. Each object should contain the properties `src` (the URL of the stylesheet) and `target` (the location where the stylesheet should be inserted).
 
 - `htmlInjection`: An array of objects containing information about HTML content to be inserted into the page. Each object should contain the properties `selector`, `position`, `content`, `routes`, `excludeStatusCode` and `includeStatusCode`.
 
@@ -124,5 +124,8 @@ username.example.com <-[CNAME]-> temp.ourdomain.com <-[reverse proxy]-> ourdomai
 
 # 📜 Licence
 This project has been developed by [@VWGameDev](https://vwgame.dev) and is published under the [MIT licence](license.md).
+### Verwendete Bibliotheken
+- [Itty Router](https://github.com/kwhitley/itty-router) : Copyright (c) 2020 Kevin R. Whitley
+---
 # ⚠️ Disclaimer
 I assume no liability for any damages that may result from the use of this project and provide this project without warranty of any kind. I also expressly point out that the use of reverse proxies should only be done with the permission of the operator of the target URLs. Furthermore, I do not guarantee the functionality, security or reliability of this project. However, I am happy to receive any feedback and pull requests.
